@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake hra</title>
+    <style>
+        body {
+            background: #c0e2c6;
+            text-align: center;
+        }
+
+        canvas {
+            border: 10px solid #c94e33;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.querySelector("canvas");
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    </script>
+</body>
+</html>
