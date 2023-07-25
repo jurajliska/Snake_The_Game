@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake hra</title>
+    <title>Snake The Game</title>
     <style>
         body {
             background: #c0e2c6;
@@ -20,11 +20,36 @@
     <canvas width="500" height="500"></canvas>
 
     <script>
+        //canvas
         const canvas = document.querySelector("canvas");
         const ctx = canvas.getContext("2d");
 
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        //player
+        const snakeSize = 25;
+        let snakeSpeed = 3;
+        let snakePosX = 0;
+        let snakePosY = canvas.height / 2 - snakeSize / 2;
+
+        
+        
+        //loop
+        function gameLoop() {
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            //snakePosX += snakeSpeed;
+
+            if ( snakePosX > canvas.width ){
+                snakePosX = 0;
+            }
+        
+            ctx.fillStyle = "black";
+            ctx.fillRect(snakePosX, snakePosY, snakeSize, snakeSize);
+
+            requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+
     </script>
 </body>
 </html>
