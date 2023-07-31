@@ -15,9 +15,9 @@
         }
     </style>
 </head>
-<!-- 33 50 -->
+<!-- 43 30 -->
 <body>
-    <canvas width="500" height="500"></canvas>
+    <canvas width="480" height="480"></canvas>
 
     <script>
         //listeners
@@ -28,8 +28,9 @@
         const ctx = canvas.getContext("2d");
 
         //player
-        const snakeSize = 25;
-        let snakeSpeed = 25;
+        const snakeSize = 30;
+        let snakeSpeed = 30;
+
         let snakePosX = 0;
         let snakePosY = canvas.height / 2 - snakeSize / 2;
 
@@ -67,7 +68,13 @@
 
         /* DRAW*/
         function drawEverything() {
-            rectangle("white", 0, 0, canvas.width, canvas.height);
+            // backgrounf
+            rectangle("#c0e2c6", 0, 0, canvas.width, canvas.height);
+
+            // grid
+            drawGrid();
+
+            // snake
             rectangle("black", snakePosX, snakePosY, snakeSize, snakeSize);
         
         }
@@ -105,6 +112,15 @@
                         velocityY = 1;
                     }
                     break;
+            }
+        }
+
+        /* Grid */
+        function drawGrid(params) {
+            for (let i = 0; i < canvas.width / snakeSize; i++ ) {
+                for (let j = 0; j < canvas.height / snakeSize; j++ ) {
+                    rectangle("white", snakeSize * i, snakeSize * j, snakeSize - 1, snakeSize - 1);
+                }
             }
         }
 
