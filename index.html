@@ -29,7 +29,7 @@
 
         //player
         const snakeSize = 25;
-        let snakeSpeed = 3;
+        let snakeSpeed = 25;
         let snakePosX = 0;
         let snakePosY = canvas.height / 2 - snakeSize / 2;
 
@@ -41,8 +41,8 @@
         //loop
         function gameLoop() {
             drawEverything();
-            //moveStuff();
-            requestAnimationFrame(gameLoop);
+            // moveStuff();
+            setTimeout(gameLoop, 1000 / 15);
         }
         gameLoop();
 
@@ -72,7 +72,7 @@
         
         }
 
-        //draw rectangle
+        // draw rectangle
         function rectangle(color, x ,y, width, height) {
             ctx.fillStyle = color;
             ctx.fillRect(x, y, width, height);
