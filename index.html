@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<!-- 48 48 -->
+<!-- 51 10 -->
 <body>
     <canvas width="480" height="480"></canvas>
 
@@ -37,6 +37,10 @@
         let velocityX = 1;
         let velocityY = 0;
 
+        //fooood
+        let foodPositionX = 300;
+        let foodPositionY = 180;
+
         const tielCountX = canvas.width / snakeSize;
         const tielCountY = canvas.height / snakeSize;
         
@@ -53,6 +57,7 @@
             snakePosX += snakeSpeed * velocityX;
             snakePosY += snakeSpeed * velocityY;
 
+            // wall collision
             if ( snakePosX > (canvas.width - snakeSize)){
                 snakePosX = 0;
             }
@@ -65,6 +70,11 @@
             if ( snakePosY < 0 ){
                 snakePosY = canvas.height;
             }
+
+            // food collision
+            if (snakePosX == foodPositionX && snakePosY == foodPositionY){
+                alert("YummM!");
+            }
         }
 
         /* DRAW*/
@@ -74,6 +84,9 @@
 
             // grid
             drawGrid();
+            
+            //food
+            rectangle("green", foodPositionX, foodPositionY, snakeSize, snakeSize);
 
             // snake
             rectangle("black", snakePosX, snakePosY, snakeSize, snakeSize);
