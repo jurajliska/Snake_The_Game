@@ -15,7 +15,7 @@
         }
     </style>
 </head>
-<!-- 51 10 -->
+<!-- 53 55 -->
 <body>
     <canvas width="480" height="480"></canvas>
 
@@ -41,8 +41,8 @@
         let foodPositionX = 300;
         let foodPositionY = 180;
 
-        const tielCountX = canvas.width / snakeSize;
-        const tielCountY = canvas.height / snakeSize;
+        const tileCountX = canvas.width / snakeSize;
+        const tileCountY = canvas.height / snakeSize;
         
         //loop
         function gameLoop() {
@@ -73,13 +73,14 @@
 
             // food collision
             if (snakePosX == foodPositionX && snakePosY == foodPositionY){
-                alert("YummM!");
+               foodPositionX = Math.floor(Math.random() * tileCountX) * snakeSize;
+               foodPositionX = Math.floor(Math.random() * tileCountY) * snakeSize;
             }
         }
 
         /* DRAW*/
         function drawEverything() {
-            // backgrounf
+            // background
             rectangle("#c0e2c6", 0, 0, canvas.width, canvas.height);
 
             // grid
@@ -131,8 +132,8 @@
 
         /* Grid */
         function drawGrid(params) {
-            for (let i = 0; i < tielCountX; i++ ) {
-                for (let j = 0; j < tielCountY; j++ ) {
+            for (let i = 0; i < tileCountX; i++ ) {
+                for (let j = 0; j < tileCountY; j++ ) {
                     rectangle("white", snakeSize * i, snakeSize * j, snakeSize - 1, snakeSize - 1);
                 }
             }
