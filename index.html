@@ -13,11 +13,20 @@
         canvas {
             border: 10px solid #c94e33;
         }
+
+        h1{
+            font-family: Tahoma, sans-serif;
+            font-size: 46px;
+            margin: 0;
+        }
+
     </style>
 </head>
-<!-- 53 55 -->
+<!-- 59 49 -->
+
 <body>
     <canvas width="480" height="480"></canvas>
+    <h1>0</h1>
 
     <script>
         //listeners
@@ -25,6 +34,7 @@
 
         //canvas
         const canvas = document.querySelector("canvas");
+        const title = document.querySelector("h1");
         const ctx = canvas.getContext("2d");
 
         //player
@@ -38,18 +48,23 @@
         let velocityY = 0;
 
         //fooood
-        let foodPositionX = 300;
-        let foodPositionY = 180;
+        let foodPositionX = 0;
+        let foodPositionY = 0;
 
+        // game
         const tileCountX = canvas.width / snakeSize;
         const tileCountY = canvas.height / snakeSize;
+
+        let score = 0;
         
         //loop
         function gameLoop() {
             drawEverything();
-            // moveStuff();
+            moveStuff();
             setTimeout(gameLoop, 1000 / 10);
         }
+
+        resetFood();
         gameLoop();
 
         /* MoVE */
@@ -73,8 +88,9 @@
 
             // food collision
             if (snakePosX == foodPositionX && snakePosY == foodPositionY){
-               foodPositionX = Math.floor(Math.random() * tileCountX) * snakeSize;
-               foodPositionX = Math.floor(Math.random() * tileCountY) * snakeSize;
+                // score++;
+                title.textContent = ++score;
+                resetFood();
             }
         }
 
@@ -98,6 +114,13 @@
         function rectangle(color, x ,y, width, height) {
             ctx.fillStyle = color;
             ctx.fillRect(x, y, width, height);
+        }
+
+        // RESET food
+        function resetFood() {
+            foodPositionX = Math.floor(Math.random() * tileCountX) * snakeSize;
+            foodPositionY = Math.floor(Math.random() * tileCountY) * snakeSize;
+            
         }
 
         /* Keyboard */
