@@ -22,23 +22,33 @@
 
     </style>
 </head>
-<!-- 59 49 -->
+<!-- 1 11 35 -->
 
 <body>
     <canvas width="480" height="480"></canvas>
     <h1>0</h1>
 
     <script>
-        //listeners
+        //Listeners
         document.addEventListener("keydown", keyPush);
 
-        //canvas
+        //Canvas
         const canvas = document.querySelector("canvas");
         const title = document.querySelector("h1");
         const ctx = canvas.getContext("2d");
 
-        //player
+
+        // Game
+        const fps = 10;
+        let score = 0;
+
         const snakeSize = 30;
+
+        const tileCountX = canvas.width / snakeSize;
+        const tileCountY = canvas.height / snakeSize;
+
+
+        //Player
         let snakeSpeed = snakeSize;
 
         let snakePosX = 0;
@@ -47,21 +57,20 @@
         let velocityX = 1;
         let velocityY = 0;
 
-        //fooood
+        let tail = [];
+        let snakeLength = 2;
+
+
+        //Fooood
         let foodPositionX = 0;
         let foodPositionY = 0;
 
-        // game
-        const tileCountX = canvas.width / snakeSize;
-        const tileCountY = canvas.height / snakeSize;
-
-        let score = 0;
         
-        //loop
+        //Loop
         function gameLoop() {
             drawEverything();
-            moveStuff();
-            setTimeout(gameLoop, 1000 / 10);
+            // moveStuff();
+            setTimeout(gameLoop, 1000 / fps);
         }
 
         resetFood();
@@ -86,10 +95,16 @@
                 snakePosY = canvas.height;
             }
 
+            // tail
+            tail.push({ x: snakePosX, y: snakePosY})
+
+            // forget earliest parts of snake
+            tail = tail.slice(-1 * snakeLength);
+
             // food collision
             if (snakePosX == foodPositionX && snakePosY == foodPositionY){
-                // score++;
                 title.textContent = ++score;
+                snakeLength++;
                 resetFood();
             }
         }
@@ -105,9 +120,13 @@
             //food
             rectangle("green", foodPositionX, foodPositionY, snakeSize, snakeSize);
 
+            // Tail
+            tail.forEach( snakePart =>
+                rectangle("grey", snakePart.x, snakePart.y, snakeSize, snakeSize)
+            )
+
             // snake
             rectangle("black", snakePosX, snakePosY, snakeSize, snakeSize);
-        
         }
 
         // draw rectangle
