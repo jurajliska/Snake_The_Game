@@ -15,14 +15,18 @@
         }
 
         h1{
-            font-family: Tahoma, sans-serif;
-            font-size: 46px;
-            margin: 0;
+            font-family: Helvetica, sans-serif;
+            font-size: 42px;
+            margin: 4px;
+        }
+
+        h1 strong {
+            font-size: 1.25em;
         }
 
     </style>
 </head>
-<!-- 1 11 35 -->
+<!-- 1 18 30 -->
 
 <body>
     <canvas width="480" height="480"></canvas>
@@ -39,17 +43,18 @@
 
 
         // Game
+        let gameIsRunning = true;
+
         const fps = 10;
+        const tileSize = 30;
+
+        const tileCountX = canvas.width / tileSize;
+        const tileCountY = canvas.height / tileSize;
+
         let score = 0;
 
-        const snakeSize = 30;
-
-        const tileCountX = canvas.width / snakeSize;
-        const tileCountY = canvas.height / snakeSize;
-
-
         //Player
-        let snakeSpeed = snakeSize;
+        let snakeSpeed = tileSize;
 
         let snakePosX = 0;
         let snakePosY = canvas.height / 2;
@@ -68,9 +73,11 @@
         
         //Loop
         function gameLoop() {
-            drawEverything();
-            // moveStuff();
-            setTimeout(gameLoop, 1000 / fps);
+            if ( gameIsRunning ){
+                drawEverything();
+                moveStuff();
+                setTimeout(gameLoop, 1000 / fps);
+            }
         }
 
         resetFood();
@@ -82,18 +89,25 @@
             snakePosY += snakeSpeed * velocityY;
 
             // wall collision
-            if ( snakePosX > (canvas.width - snakeSize)){
+            if ( snakePosX > (canvas.width - tileSize)){
                 snakePosX = 0;
             }
             if ( snakePosX < 0 ){
                 snakePosX = canvas.width;
             }
-            if ( snakePosY > (canvas.height - snakeSize)){
+            if ( snakePosY > (canvas.height - tileSize)){
                 snakePosY = 0;
             }
             if ( snakePosY < 0 ){
                 snakePosY = canvas.height;
             }
+
+            // Game over (Snake collision)
+            tail.forEach( snakePart => {
+                if (snakePosX == snakePart.x && snakePosY == snakePart.y){
+                    gameOver();
+                }
+            })
 
             // tail
             tail.push({ x: snakePosX, y: snakePosY})
@@ -118,15 +132,15 @@
             drawGrid();
             
             //food
-            rectangle("green", foodPositionX, foodPositionY, snakeSize, snakeSize);
+            rectangle("green", foodPositionX, foodPositionY, tileSize, tileSize);
 
             // Tail
             tail.forEach( snakePart =>
-                rectangle("grey", snakePart.x, snakePart.y, snakeSize, snakeSize)
+                rectangle("grey", snakePart.x, snakePart.y, tileSize, tileSize)
             )
 
             // snake
-            rectangle("black", snakePosX, snakePosY, snakeSize, snakeSize);
+            rectangle("black", snakePosX, snakePosY, tileSize, tileSize);
         }
 
         // draw rectangle
@@ -137,9 +151,15 @@
 
         // RESET food
         function resetFood() {
-            foodPositionX = Math.floor(Math.random() * tileCountX) * snakeSize;
-            foodPositionY = Math.floor(Math.random() * tileCountY) * snakeSize;
+            foodPositionX = Math.floor(Math.random() * tileCountX) * tileSize;
+            foodPositionY = Math.floor(Math.random() * tileCountY) * tileSize;
             
+        }
+
+        // Game over
+        function gameOver(){
+            title.innerHTML = `☠️<strong> ${score} </strong>☠️`;
+            gameIsRunning = false;
         }
 
         /* Keyboard */
@@ -176,7 +196,7 @@
         function drawGrid(params) {
             for (let i = 0; i < tileCountX; i++ ) {
                 for (let j = 0; j < tileCountY; j++ ) {
-                    rectangle("white", snakeSize * i, snakeSize * j, snakeSize - 1, snakeSize - 1);
+                    rectangle("white", tileSize * i, tileSize * j, tileSize - 1, tileSize - 1);
                 }
             }
         }
