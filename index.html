@@ -154,6 +154,15 @@
             foodPositionX = Math.floor(Math.random() * tileCountX) * tileSize;
             foodPositionY = Math.floor(Math.random() * tileCountY) * tileSize;
             
+            // dont spawn food on snake head
+            if ( foodPositionX === snakePosX && foodPositionY === snakePosY){
+                resetFood();
+            }
+
+            // dont spawn food on snake part
+            if ( tail.some(snakePart => snakePart.x === foodPositionX && snakePart.y === foodPositionY) ){
+                resetFood();
+            }
         }
 
         // Game over
