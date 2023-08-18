@@ -151,6 +151,11 @@
 
         // RESET food
         function resetFood() {
+            // Game over (neni kam ist)
+            if ( snakeLength == tileCountX * tileCountY){
+                gameOver();
+            }
+
             foodPositionX = Math.floor(Math.random() * tileCountX) * tileSize;
             foodPositionY = Math.floor(Math.random() * tileCountY) * tileSize;
             
