@@ -184,10 +184,14 @@
                     }
                     break;
                 case "ArrowDown":
-                if (velocityY !== -1) {
+                    if (velocityY !== -1) {
                         velocityX = 0;
                         velocityY = 1;
                     }
+                    break;
+                default:
+                    // Restart game
+                    if ( !gameIsRunning ) location.reload();
                     break;
             }
         }
